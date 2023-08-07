@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Demo Tree</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      .grid {
+        padding: 10px;
+        display: grid;
+        grid-template-columns: repeat(10, 160px);
+        grid-template-rows: repeat(10, 80px);
+        gap: 20px;
+        background-color: darkcyan;
+      }
+
+      .grid-item {
+        background: lightblue;
+        grid-column: var(--column) / calc(var(--column) + 1);
+        grid-row: var(--row) / calc(var(--row) + 1);
+        color: white;
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10%;
+      }
+
+      .template {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-item template" style="--column: 1; --row: 1">A</div>
+    <div class="grid"></div>
+  </body>
+  <script src="main.js"></script>
+  <script>
+    const output = f();
+
+    const grid = document.querySelector(".grid");
+
+    const template = document.querySelector(".grid-item.template");
+
+    output.forEach(({ row, column }, index) => {
+      const newNode = template.cloneNode();
+      newNode.classList.remove("template");
+      newNode.innerHTML = index;
+      newNode.style.setProperty("--column", column + 1);
+
+      newNode.style.setProperty("--row", row + 1);
+
+      grid.appendChild(newNode);
+    });
+  </script>
+</html>

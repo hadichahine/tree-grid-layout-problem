@@ -1,0 +1,10 @@
+{
+  "name": "graph-traversal-problem",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Hadi Chahine <hadi.n.chahine@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^29.6.2"
+  }
+}
