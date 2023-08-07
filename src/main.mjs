@@ -1,6 +1,5 @@
 function traversal(graphObject, accumulatorFunction, initialAccumulator) {
   const adjacencyList = graphObject.adjacencyList;
-  const nodes = graphObject.nodes;
   const visited = new Array(adjacencyList.length).fill(false);
   const visitedNodes = [];
 
@@ -8,8 +7,6 @@ function traversal(graphObject, accumulatorFunction, initialAccumulator) {
 
   function explore(nodeIndex, parent, breadth, depth) {
     visited[nodeIndex] = true;
-
-    const node = nodes[nodeIndex];
 
     const neighbors = adjacencyList[nodeIndex];
     let breadthCounter = 0;
@@ -19,8 +16,8 @@ function traversal(graphObject, accumulatorFunction, initialAccumulator) {
       }
     }
     accumulator = accumulatorFunction({
+      graphObject,
       accumulator,
-      node,
       nodeIndex,
       breadth,
       depth,
@@ -35,23 +32,23 @@ function traversal(graphObject, accumulatorFunction, initialAccumulator) {
   return accumulator;
 }
 
-function getNode(index) {
-  const nodeChildren = graphObject.adjacencyList[index];
-
-  return {
-    getChildren() {
-      return nodeChildren;
-    },
-  };
-}
-
 const accumulatorFunction = ({
+  graphObject,
   accumulator,
   nodeIndex,
-  parent,
   depth,
   visited,
 }) => {
+  function getNode(index) {
+    const nodeChildren = graphObject.adjacencyList[index];
+
+    return {
+      getChildren() {
+        return nodeChildren;
+      },
+    };
+  }
+
   const isLeafNode = getNode(nodeIndex).getChildren().length === 0;
 
   const previousVisited = visited.length > 0 ? visited.slice(-1)[0] : null;
@@ -86,38 +83,13 @@ const accumulatorFunction = ({
   return newAcc;
 };
 
-const graphObject = {
-  adjacencyList: [[1, 2], [3, 4], [5, 6], [], [7, 8], [], [], [], []],
-  nodes: [
-    { name: "A" },
-    { name: "B" },
-    { name: "C" },
-    { name: "D" },
-    { name: "E" },
-    { name: "F" },
-    { name: "G" },
-    { name: "H" },
-  ],
-};
-
-const res = [];
-
-function layoutTree(root, row, col) {
-  res[root] = { row, col };
-
-  let currentCol = col;
-  for (const child of graphObject.adjacencyList[root]) {
-    currentCol += layoutTree(child, row + 1, currentCol);
-  }
-
-  return currentCol;
-}
-
-function f() {
+function solution(graphObject) {
   return traversal(
     graphObject,
     accumulatorFunction,
     new Array(graphObject.adjacencyList.length),
     false
-  );
+  ).map(({ column, row }) => ({ column, row }));
 }
+
+export default solution;

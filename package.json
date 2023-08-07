@@ -4,7 +4,12 @@
   "main": "index.js",
   "author": "Hadi Chahine <hadi.n.chahine@gmail.com>",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
+    "http-server": "^14.1.1",
     "jest": "^29.6.2"
+  },
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
   }
 }

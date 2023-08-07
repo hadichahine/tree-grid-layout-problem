@@ -37,9 +37,17 @@
     <div class="grid-item template" style="--column: 1; --row: 1">A</div>
     <div class="grid"></div>
   </body>
-  <script src="main.js"></script>
-  <script>
-    const output = f();
+  <script type="module" src="src/main.mjs"></script>
+  <script type="module">
+    import solution from "./src/main.mjs";
+
+    const graphObject = {
+    adjacencyList: [[1, 2], [3, 5], [4], [], [], []],
+    };
+
+    console.log(solution(graphObject))
+
+    const output = solution(graphObject);
 
     const grid = document.querySelector(".grid");
 
